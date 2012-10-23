@@ -10,7 +10,7 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: mysql
+  adapter: mysql2
   database: swt2_prep_exec_test
   pool: 5
   timeout: 5000
@@ -18,7 +18,7 @@ test: &test
   password: swt2rocks
 
 production:
-  adapter: mysql
+  adapter: mysql2
   database: swt2_prep_exec_prod
   pool: 5
   timeout: 5000
