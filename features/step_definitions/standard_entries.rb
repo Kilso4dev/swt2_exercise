@@ -109,16 +109,20 @@ end
 def fill_in_fixture(hsh)
   hsh.each do |k,v|
     if v[1] == :select
-      When %{I select "#{v[0]}" from "#{k}"}
+      select([0], :from => k)
     else
-      When %{I fill in "#{k}" with "#{v[0]}"}
+      fill_in(k, :with => v[0])
     end
   end
 end
 
 def see_fixture?(hsh)
   hsh.each do |k,v|
-    Then %{I should see "#{v[0]}"}
+    if page.respond_to? :should
+      page.should have_content(v[0])
+    else
+      assert page.has_content?(v[0])
+    end
   end
 end
 
@@ -133,8 +137,8 @@ end
 
 def check_for_model_with_fixture(model, fixture)
   old_path = current_path || "/"
-  Given %{I am on the #{model.pluralize} page}
-  When %{I follow "#{get_name(model, fixture)}"}
+  visit path_to("the #{model.pluralize} page")
+  click_link(get_name(model, fixture))
   see_fixture? fixture
   visit old_path
 end
