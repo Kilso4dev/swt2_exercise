@@ -53,17 +53,17 @@ When /^I fill in the example paper$/ do
 end
 
 Then /^I should see the example author$/ do
-  Then %{I should see "#{get_name("author", example_authors()[0])}"}
+  page.should have_content("#{get_name("author", example_authors()[0])}")
 end
 
 Then /^I should see the example authors$/ do
   example_authors().each do |fixture|
-    Then %{I should see "#{get_name("author", fixture)}"}
+    page.should have_content("#{get_name("author", fixture)}")
   end
 end
 
 Then /^I should see the example author's details$/ do
-  see_fixture? example_authors()[0]
+  see_fixture?(example_authors()[0])
 end
 
 Then /^there should be the example author$/ do
@@ -71,12 +71,12 @@ Then /^there should be the example author$/ do
 end
 
 Then /^I should see the example paper$/ do
-  Then %{I should see "#{get_name("paper", example_papers()[0])}"}
+  page.should have_content("#{get_name("paper", example_papers()[0])}")
 end
 
 Then /^I should see the example papers$/ do
   example_papers().each do |fixture|
-    Then %{I should see "#{get_name("paper", fixture)}"}
+    page.should have_content("#{get_name("paper", fixture)}")
   end
 end
 
@@ -109,7 +109,7 @@ end
 def fill_in_fixture(hsh)
   hsh.each do |k,v|
     if v[1] == :select
-      select([0], :from => k)
+      select(v[0], :from => k)
     else
       fill_in(k, :with => v[0])
     end
